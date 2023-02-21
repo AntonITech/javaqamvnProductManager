@@ -97,4 +97,30 @@ public class TestRepositoryProduct {
         Assertions.assertArrayEquals(expected, actual);
     }
 
+    @Test
+    public void testRemoveIdWhenIdMatches() {
+
+        repo.save(product1);
+        repo.save(product2);
+        repo.save(product3);
+        repo.removeById(3);
+
+        Product[] expected = {product1, product2};
+        Product[] actual = repo.findAll();
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testRemoveIdWhenIdNotMatch() {
+
+        repo.save(product1);
+        repo.save(product2);
+        repo.save(product3);
+
+        Assertions.assertThrows(NotFoundException.class,
+                () -> repo.removeById(7)
+                );
+    }
+
 }
